@@ -15,3 +15,7 @@ class TestRun2Fv(unittest.TestCase):
             with open('.test-output') as f:
                 verify(f.read())
             os.remove('.test-output')
+
+    def test_with_imaginary_data_for_multiple_topics(self):
+        self.assertTrue(False)
+
