@@ -26,8 +26,8 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
             out[words[2]][words[0]][words[5]] = [words[3], words[4], 1]
         f.close()
     f = open(qrel_file, "rt")
-    # teamset = list(teamset)
-    # teamset = sorted(teamset)
+    teamset = list(teamset)
+    teamset = sorted(teamset)
     qid = 1
     for line in f:
         words = line.split()

@@ -17,5 +17,12 @@ class TestRun2Fv(unittest.TestCase):
             os.remove('.test-output')
 
     def test_with_imaginary_data_for_multiple_topics(self):
-        self.assertTrue(False)
+        arguments = sys.argv + ['-i', 'test/resources/input_multiple_topics/',
+                                '-o', '.test-output',
+                                '-q', 'test/resources/test.qrel']
+        with patch.object(sys, 'argv', arguments):
+            imp.load_source('__main__', './run2fv.py')
+            with open('.test-output') as f:
+                verify(f.read())
+            os.remove('.test-output')
 
