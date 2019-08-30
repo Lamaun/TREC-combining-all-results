@@ -4,7 +4,7 @@ import os
 import gzip
 import argparse
 
-defaults = ["test/input", "ranklib.fv", "test/test.qrel"]
+defaults = ["test/resources/input_single_topic", "ranklib.fv", "test/resources/test.qrel"]
 
 def msgExit(msg="", rc=0):
     print(msg)
@@ -14,6 +14,7 @@ def msgExit(msg="", rc=0):
 def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=defaults[2]):
     out = dict()
     queryset = dict()
+    qidlookup = dict()
     teamset = set()
     for filename in os.listdir(input_folder):
         f = gzip.open(os.path.join(input_folder, filename), "rt")
@@ -25,23 +26,35 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
             out[words[2]][words[0]][words[5]] = [words[3], words[4], 1]
         f.close()
     f = open(qrel_file, "rt")
+    # teamset = list(teamset)
+    # teamset = sorted(teamset)
+    qid = 1
     for line in f:
         words = line.split()
+        if(qidlookup.get(words[0]) == None):
+            qidlookup[words[0]]=qid
+            qid+=1
         queryset[words[2]] = queryset.get(words[2], [])+[(words[0], words[3])]
     f.close()
     f = open(output_file, "w+")
-
+    f.write("# Feature-Descriptions\n#\n")
+    feature_id=1
+    for team in teamset:
+        f.write("# "+str(feature_id)+": Run '"+team+"' - Position (default=-1000)\n")
+        feature_id+=1
+        f.write("# "+str(feature_id)+": Run '"+team+"' - Score (default=-1000)\n")
+        feature_id+=1
+        f.write("# "+str(feature_id)+": Run '"+team+"' - document listed in the ranking (0=no; 1=yes)\n#\n")
+        feature_id+=1
     for doc in out:
-        query_id = 1
         for query in queryset.get(doc, []):
-            s = query[1] + " qid:" + str(query_id)+" "
-            query_id += 1
+            s = query[1] + " qid:" + str(qidlookup[query[0]])+" "
             feature_id = 1
             for team in teamset:
-                for score in out.get(doc, dict()).get(query[0], dict()).get(team, [0, 0, 0]):
+                for score in out.get(doc, dict()).get(query[0], dict()).get(team, [-1000, -1000, 0]):
                     s += str(feature_id)+":"+str(score)+" "
                     feature_id += 1
-            f.write(s+"\n")
+            f.write(s+" # doc '"+doc+"' for topic '"+query[0]+"'\n")
 
 
 if __name__ == "__main__":
