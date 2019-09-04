@@ -20,6 +20,8 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
         f = gzip.open(os.path.join(input_folder, filename), "rt")
         for line in f:
             words = line.split()
+            if(len(words)<6):
+                continue
             teamset.add(words[5])
             out[words[2]] = out.get(words[2], dict())
             out[words[2]][words[0]] = out[words[2]].get(words[0], dict())
@@ -31,6 +33,8 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
     qid = 1
     for line in f:
         words = line.split()
+        if(len(words)<4):
+                continue
         if(qidlookup.get(words[0]) == None):
             qidlookup[words[0]]=qid
             qid+=1
