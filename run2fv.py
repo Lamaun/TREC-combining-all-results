@@ -58,7 +58,7 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
                 for score in out.get(doc, dict()).get(query[0], dict()).get(team, [-1000, -1000, 0]):
                     s += str(feature_id)+":"+str(score)+" "
                     feature_id += 1
-            f.write(s+" # doc '"+doc+"' for topic '"+query[0]+"'\n")
+            f.write(s+" # "+doc+"\n")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,3 @@
+[submodule "third-party/anserini"]
+	path = third-party/anserini
+	url = https://github.com/mam10eks/anserini.git
