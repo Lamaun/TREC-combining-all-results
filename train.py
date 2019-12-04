@@ -51,6 +51,7 @@ def train_ranklib_model(feature_vector_file, ranklib_algorithm, metric_to_train,
     used_time = time.time()-start
     modelsize = os.path.getsize(model_file)
     output = str(output).split("on training data: ")[1].split("\\n")[0]
+    print([metric_to_train, "used_time in seconds", "modelsize in byte"])
     print([output, used_time, modelsize])
     return True
 
