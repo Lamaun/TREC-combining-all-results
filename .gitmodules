@@ -1,3 +1,6 @@
 [submodule "third-party/anserini"]
 	path = third-party/anserini
 	url = https://github.com/mam10eks/anserini.git
+[submodule "third-party/ApprovalTests.Python"]
+	path = third-party/ApprovalTests.Python
+	url = https://github.com/mam10eks/ApprovalTests.Python.git

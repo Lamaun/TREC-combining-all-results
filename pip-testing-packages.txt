@@ -1,0 +1,3 @@
+nose
+mock
+third-party/ApprovalTests.Python/
