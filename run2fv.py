@@ -5,7 +5,7 @@ import gzip
 import argparse
 
 defaults = ["test/resources/input_single_topic",
-            "ranklib.fv", "test/resources/test.qrel", True]
+            "ranklib.fv", "test/resources/test.qrel"]
 
 
 def msgExit(msg="", rc=0):
@@ -13,7 +13,7 @@ def msgExit(msg="", rc=0):
     exit(rc)
 
 
-def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=defaults[2], trainable=defaults[3]):
+def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=defaults[2], combine=False):
     out = dict()
     queryset = dict()
     teamset = set()
@@ -32,14 +32,15 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
             teamset.add(words[5])
             out[words[2]] = out.get(words[2], dict())
             out[words[2]][words[0]] = out[words[2]].get(words[0], dict())
-            out[words[2]][words[0]][words[5]] = [words[3], words[4], 1]
-            if not trainable:
+            out[words[2]][words[0]][words[5]] = [
+                words[3], words[4], 1]  # [rank,score,contained]
+            if combine:
                 queryset[words[2]] = queryset.get(
-                    words[2], [])+[(words[0], "0")]
+                    words[2], set()) | set([(words[0], "0")])
         f.close()
     teamset = list(teamset)
     teamset = sorted(teamset)
-    if trainable:
+    if not combine:
         f = open(qrel_file, "rt")
         for line in f:
             words = line.split()
@@ -50,7 +51,7 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
             if(len(words) < 4):
                 continue
             queryset[words[2]] = queryset.get(
-                words[2], [])+[(words[0], words[3])]
+                words[2], set()) | set([(words[0], words[3])])
         f.close()
     f = open(output_file, "w+")
     f.write("# Feature-Descriptions\n#\n")
@@ -70,7 +71,14 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
             s = query[1] + " qid:" + str(query[0])+" "
             feature_id = 1
             for team in teamset:
-                for score in out.get(doc, dict()).get(query[0], dict()).get(team, [-1000, -1000, 0]):
+                # [-1000, -1000, 0] are the defaults for [rank,score,contained]
+                scores = out.get(doc, dict()).get(
+                    query[0], dict()).get(team, [-1000, -1000, 0])
+                # We need a sparse view on the combined feature vector. Files are too big otherwise.
+                if combine and scores[2] == 0:
+                    feature_id += 3
+                    continue
+                for score in scores:
                     s += str(feature_id)+":"+str(score)+" "
                     feature_id += 1
             f.write(s+" # "+doc+"\n")
@@ -85,9 +93,9 @@ if __name__ == "__main__":
                         default=defaults[1], type=str,  help='Where to write to. Default:'+str(defaults[1]))
     parser.add_argument('-q', '--qrel_file', default=defaults[2], type=str,
                         help='The qrel file needed for the target relevance. Default:'+str(defaults[2]))
-    parser.add_argument('-t', '--trainable', default=defaults[3], type=bool,
-                        help='If set to False we will not read the qrel file and just write every score from' +
-                        'the run files into the feature vector. Default:'+str(defaults[3]))
+    parser.add_argument('-c', '--combine', default=False,
+                        action='store_true',  help='If set we will not read the qrel file and just write every score from' +
+                        'the run files into one json.')
     try:  # If you want bash completion take a look at https://pypi.org/project/argcomplete/
         import argcomplete
         argcomplete.autocomplete(parser)
@@ -95,4 +103,4 @@ if __name__ == "__main__":
         pass
     args = parser.parse_args()
     execute(args.input_folder, args.output_file,
-            args.qrel_file, args.trainable)
+            args.qrel_file, args.combine)

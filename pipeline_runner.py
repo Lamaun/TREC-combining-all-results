@@ -41,13 +41,13 @@ def execute(run_file_folder=defaults["run_file_folder"],
         if not preview:
             import run2fv
             run2fv.execute(input_folder=run_file_folder,
-                           output_file=feature_vector_file_trainable, qrel_file=qrel_file, trainable=True)
+                           output_file=feature_vector_file_trainable, qrel_file=qrel_file, combine=False)
             run2fv.execute(input_folder=run_file_folder,
-                           output_file=feature_vector_file_complete, qrel_file=qrel_file, trainable=False)
+                           output_file=feature_vector_file_complete, qrel_file=qrel_file, combine=True)
         else:
-            print('python3 run2fv.py --input-folder "{}" --output_file "{}" --qrel_file "{}" --trainable True'.format(
+            print('python3 run2fv.py --input_folder "{}" --output_file "{}" --qrel_file "{}"'.format(
                 run_file_folder, feature_vector_file_trainable, qrel_file))
-            print('python3 run2fv.py --input-folder "{}" --output_file "{}" --qrel_file "{}" --trainable False'.format(
+            print('python3 run2fv.py --input_folder "{}" --output_file "{}" --qrel_file "{}" --combine'.format(
                 run_file_folder, feature_vector_file_complete, qrel_file))
     else:
         run_file_folder = defaults["run_file_folder"]
