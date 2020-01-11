@@ -1,15 +1,17 @@
-# Feature-Descriptions
+#
+#
+#
 #
 # 1: Run 'constructed_imaginary' - Position (default=-1000)
 # 2: Run 'constructed_imaginary' - Score (default=-1000)
-# 3: Run 'constructed_imaginary' - document listed in the ranking (0=no; 1=yes)
-#
+# 3: Run 'constructed_imaginary' - document listed in the ranking (0=no; 1=yes) (default=0)
 # 4: Run 'imaginary_constructed' - Position (default=-1000)
 # 5: Run 'imaginary_constructed' - Score (default=-1000)
-# 6: Run 'imaginary_constructed' - document listed in the ranking (0=no; 1=yes)
-#
-0 qid:1 1:0 2:79.073 3:1 4:0 5:9.073 6:1  # doc 'file-id-61' for topic 'TS-1'
-128 qid:1 1:1 2:73.986 3:1 4:1 5:3.986 6:1  # doc 'file-id-26' for topic 'TS-1'
-12 qid:2 1:-1000 2:-1000 3:0 4:-1000 5:-1000 6:0  # doc 'file-id-77' for topic 'TS-2'
-32 qid:1 1:3 2:70.586 3:1 4:-1000 5:-1000 6:0  # doc 'file-id-77' for topic 'TS-1'
-0 qid:1 1:-1000 2:-1000 3:0 4:3 5:0.586 6:1  # doc 'file-id-37' for topic 'TS-1'
+# 6: Run 'imaginary_constructed' - document listed in the ranking (0=no; 1=yes) (default=0)
+# Begin Feature-Descriptions
+# End Feature-Descriptions
+0 qid:TS-1 1:-1000 2:-1000 3:0 4:3 5:0.586 6:1  # file-id-37
+0 qid:TS-1 1:0 2:79.073 3:1 4:0 5:9.073 6:1  # file-id-61
+12 qid:TS-2 1:-1000 2:-1000 3:0 4:-1000 5:-1000 6:0  # file-id-77
+128 qid:TS-1 1:1 2:73.986 3:1 4:1 5:3.986 6:1  # file-id-26
+32 qid:TS-1 1:3 2:70.586 3:1 4:-1000 5:-1000 6:0  # file-id-77

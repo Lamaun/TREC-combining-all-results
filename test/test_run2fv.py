@@ -12,8 +12,7 @@ class TestRun2Fv(unittest.TestCase):
                                 '-q', 'test/resources/test.qrel']
         with patch.object(sys, 'argv', arguments):
             imp.load_source('__main__', './run2fv.py')
-            with open('.test-output') as f:
-                verify(f.read())
+            verify("".join(sorted(tuple(open('.test-output','r')))))
             os.remove('.test-output')
 
     def test_with_imaginary_data_for_multiple_topics(self):
@@ -22,7 +21,6 @@ class TestRun2Fv(unittest.TestCase):
                                 '-q', 'test/resources/test.qrel']
         with patch.object(sys, 'argv', arguments):
             imp.load_source('__main__', './run2fv.py')
-            with open('.test-output') as f:
-                verify(f.read())
+            verify("".join(sorted(tuple(open('.test-output','r')))))
             os.remove('.test-output')
 

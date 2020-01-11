@@ -1,14 +1,16 @@
-# Feature-Descriptions
+#
+#
+#
 #
 # 1: Run 'constructed_imaginary' - Position (default=-1000)
 # 2: Run 'constructed_imaginary' - Score (default=-1000)
-# 3: Run 'constructed_imaginary' - document listed in the ranking (0=no; 1=yes)
-#
+# 3: Run 'constructed_imaginary' - document listed in the ranking (0=no; 1=yes) (default=0)
 # 4: Run 'imaginary_constructed' - Position (default=-1000)
 # 5: Run 'imaginary_constructed' - Score (default=-1000)
-# 6: Run 'imaginary_constructed' - document listed in the ranking (0=no; 1=yes)
-#
-2 qid:2 1:-1000 2:-1000 3:0 4:0 5:3.0 6:1  # doc 'id-1' for topic 'TS-2'
-2 qid:1 1:1 2:4.0 3:1 4:1 5:3.986 6:1  # doc 'id-2' for topic 'TS-1'
-4 qid:2 1:0 2:5 3:1 4:-1000 5:-1000 6:0  # doc 'id-2' for topic 'TS-2'
-0 qid:3 1:0 2:5 3:1 4:0 5:5 6:1  # doc 'id-3' for topic 'TS-3'
+# 6: Run 'imaginary_constructed' - document listed in the ranking (0=no; 1=yes) (default=0)
+# Begin Feature-Descriptions
+# End Feature-Descriptions
+0 qid:TS-3 1:0 2:5 3:1 4:0 5:5 6:1  # id-3
+2 qid:TS-1 1:1 2:4.0 3:1 4:1 5:3.986 6:1  # id-2
+2 qid:TS-2 1:-1000 2:-1000 3:0 4:0 5:3.0 6:1  # id-1
+4 qid:TS-2 1:0 2:5 3:1 4:-1000 5:-1000 6:0  # id-2
