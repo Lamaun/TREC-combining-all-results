@@ -54,7 +54,7 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
                 words[2], set()) | set([(words[0], words[3])])
         f.close()
     f = open(output_file, "w+")
-    f.write("# Feature-Descriptions\n#\n")
+    f.write("# Begin Feature-Descriptions\n#\n")
     feature_id = 1
     for team in teamset:
         f.write("# "+str(feature_id)+": Run '" +
@@ -64,8 +64,9 @@ def execute(input_folder=defaults[0], output_file=defaults[1], qrel_file=default
                 team+"' - Score (default=-1000)\n")
         feature_id += 1
         f.write("# "+str(feature_id)+": Run '"+team +
-                "' - document listed in the ranking (0=no; 1=yes)\n#\n")
+                "' - document listed in the ranking (0=no; 1=yes) (default=0)\n#\n")
         feature_id += 1
+    f.write("# End Feature-Descriptions\n#\n")
     for doc in out:
         for query in queryset.get(doc, []):
             s = query[1] + " qid:" + str(query[0])+" "
