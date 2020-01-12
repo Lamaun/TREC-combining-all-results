@@ -107,7 +107,8 @@ def execute(run_file_folder=defaults["run_file_folder"],
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="""Overview of algorithms to use for LTR
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     description="""Overview of algorithms to use for LTR
 # 0: MART (gradient boosted regression tree)
 # 1: RankNet
 # 2: RankBoost
